@@ -1,0 +1,1 @@
+RabbitMQ is an open-source message broker software that facilitates communication between different applications, services, or systems by sending, receiving, and managing messages. It acts as a middleman to ensure that messages are delivered reliably and efficiently, even if the receiving system is temporarily unavailable.
