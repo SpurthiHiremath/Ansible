@@ -1,0 +1,18 @@
+pipeline {
+    agent any
+    stages {
+        stage('Clone Repository') {
+            steps {
+                git 'https://github.com/your-repo.git'
+            }
+        }
+        stage('Run Ansible Playbook') {
+            steps {
+                ansiblePlaybook(
+                    playbook: 'ansible/playbooks/deploy.yml',
+                    inventory: 'ansible/inventory/production'
+                )
+            }
+        }
+    }
+}
