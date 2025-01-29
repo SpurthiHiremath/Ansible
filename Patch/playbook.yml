@@ -1,0 +1,38 @@
+---
+- name: Patch the server and Reboot
+  hosts: app
+  gather_facts: no
+  tasks:
+    - name: Patch the server
+      become: yes
+      become_user: root
+      tags: Patch
+      yum:
+        name: "*"
+        state: latest
+        update_cache: yes
+      register: patchresult
+
+    - name: Reboot the server
+      tags: reboot
+      become: yes
+      become_user: root
+      reboot:
+        reboot_timeout: 600
+        test_command: uptime
+        pre_reboot_delay: 5
+        post_reboot_delay: 5
+
+    - name: Wait for the reboot to complete if there was a change
+      wait_for_connection:
+        connect_timeout: 10
+        sleep: 5
+        delay: 5
+        timeout: 300
+
+    - name: Check the Uptime of the servers
+      command: uptime
+      register: Uptime
+
+    - debug:
+        var: Uptime
