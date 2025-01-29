@@ -1,0 +1,19 @@
+#Using Ansible Tags to Manually Rollback
+#You can define a rollback task under a separate tag.
+
+- name: Deploy Application
+  hosts: all
+  become: yes
+  tasks:
+    - name: Deploy new application version
+      command: cp /opt/app/new_version /opt/app/app
+      tags: deploy
+
+    - name: Rollback to previous version
+      command: cp /opt/app/backup /opt/app/app
+      tags: rollback
+
+
+#How it works
+#Use : ansible-playbook deploy.yml --tags deploy
+#if rollback : ansible-playbook deploy.yml --tags rollback
