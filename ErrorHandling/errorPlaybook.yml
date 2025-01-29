@@ -1,0 +1,39 @@
+---
+- name: Error Handling in Ansible
+  hosts: all
+  become: true
+
+  tasks:
+  - name: Ignore all Errors
+    ansible.builtin.apt:
+      name: "{{ item }}"
+      state: latest
+    loop:
+      - openssh
+      - openssl
+    ignore_errors: yes
+  
+  # Error handling using When 
+  - name: Verify if Docker is installed
+    ansible.builtin.command: docker --version
+    register: output
+    ignore_errors: yes
+  - name: Install Docker
+    ansible.builtin.apt:
+      name: docker.io
+      state: present
+    when:
+      output.rc != 0
+  
+   # Error Handling using failed when
+  - name: Check if a file exists in temp and fail task if its present
+    ansible.builtin.command: ls /tmp/testfile.txt
+    register: output
+    failed_when:
+        - output.rc == 0
+        - '"testFile" not in output.stdout'
+
+
+   
+
+   
