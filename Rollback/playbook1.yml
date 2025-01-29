@@ -1,0 +1,19 @@
+#You can define conditional tasks to revert changes when failures occur.
+#Example: Rolling Back a Configuration File
+
+- name: Deploy Configuration with Rollback
+  hosts: all
+  become: yes
+  tasks:
+    - name: Backup existing config
+      command: cp /etc/app/config.yaml /etc/app/config.yaml.bak
+
+    - name: Apply new config
+      copy:
+        src: new_config.yaml
+        dest: /etc/app/config.yaml
+      register: config_update
+
+    - name: Rollback if update fails
+      command: cp /etc/app/config.yaml.bak /etc/app/config.yaml
+      when: config_update.failed
