@@ -32,6 +32,13 @@
     failed_when:
         - output.rc == 0
         - '"testFile" not in output.stdout'
+        
+   # Error Handling using Retry, delay and until
+  - name: Task 2
+      command: /bin/echo "Task 2 completed"
+      retries: 3
+      delay: 10
+      until: result.rc == 0
 
 
    
