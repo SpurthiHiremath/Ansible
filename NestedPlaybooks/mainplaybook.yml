@@ -4,7 +4,7 @@
   remote_user: root
   tasks:
   - name: say hi
-    tags: foo
+    tags: always
     shell: echo "hi..."
 
 # we include another playbook
