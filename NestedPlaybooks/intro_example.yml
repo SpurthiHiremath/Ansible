@@ -1,7 +1,5 @@
 
 ---
-# on all hosts, run as the user root...
-
 - name: example play
   hosts: all
   remote_user: root
@@ -10,27 +8,29 @@
     http_port: 80
     max_clients: 200
 
-  # define the tasks that are part of this play...
-
   tasks:
   - name: longrunner
     command: /bin/sleep 15
-    async: 45
-    poll: 5
-
-  - name: write some_random_foo configuration
-    template: src=templates/foo.j2 dest=/etc/some_random_foo.conf
+   
+  - name: Copy File
+    cp: 
+      src: /NestedPlaybooks/tasks/test.txt 
+      dest: /NestedPlaybooks/tasks/target/
     notify:
     - restart apache
 
-  # make sure httpd is installed at the latest version
-
   - name: install httpd
-    yum: pkg=httpd state=latest
+    yum: 
+       pkg: httpd
+       state: latest
 
   - name: httpd start
-    service: name=httpd state=running
+    service: 
+       name: httpd 
+       state: running
 
   handlers:
     - name: restart apache
-      service: name=httpd state=restarted
+      service: 
+        name: httpd 
+        state: restarted
