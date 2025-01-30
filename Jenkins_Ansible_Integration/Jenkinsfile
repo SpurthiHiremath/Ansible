@@ -9,8 +9,8 @@ pipeline {
         stage('Run Ansible Playbook') {
             steps {
                 ansiblePlaybook(
-                    playbook: 'ansible/playbooks/deploy.yml',
-                    inventory: 'ansible/inventory/production'
+                    playbook: 'Ansible/Jenkins_Ansible_Integration/deploy.yml',
+                    inventory: 'Ansible/Jenkins_Ansible_Integration/inventory.ini'
                 )
             }
         }
