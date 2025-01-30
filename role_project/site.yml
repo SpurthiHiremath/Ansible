@@ -1,0 +1,8 @@
+
+---
+  #This is the main playbook
+- name: Install and configure Apache
+  hosts: web_servers
+  become: yes
+  roles:
+    - apache_role
