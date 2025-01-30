@@ -7,7 +7,7 @@
  -name: Create Ec2 Instances
   amazon.aws.ec2.instance:
     name: "{{ item.name }}"
-    key_name: "enterkeypairname"
+    key_name: "spurthi_key"
     instance_group: t2.micro
     security_group: default
     region: ap-south-1
